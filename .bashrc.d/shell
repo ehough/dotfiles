@@ -1,0 +1,20 @@
+# make sure bash checks for window size changes (why is this not the default?!?)
+shopt -s checkwinsize
+
+# don't blindly execute history expansions, but edit instead
+shopt -s histverify
+
+# capture more history
+export HISTSIZE=5000
+export HISTFILESIZE=5000
+
+export EDITOR=vim
+
+# if we're running on a mac, use macvim for commit messages
+OS=`uname -s`
+if [ "$OS" == "Darwin" ]
+then
+    export EDITOR='mvim -v'
+fi
+
+export PS1='\u@\h \w > '
