@@ -8,15 +8,8 @@ else
     alias ls='ls -alh --color=auto'
 fi
 
-
 # no vi please
-if [ "$OS" == "Darwin" ]
-then
-    alias vi='mvim -v'
-else
-    alias vi=vim
-fi
-
+alias vi=vim
 
 alias ps='ps --forest'
 alias cp='cp -v'
