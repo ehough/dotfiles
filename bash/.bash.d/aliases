@@ -1,0 +1,43 @@
+# Easier navigation: .., ..., ...., ....., ~ and -
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+# Always enable colored `grep` output
+# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# some more ls aliases
+OS=`uname -s`
+
+if [ "$OS" == "Darwin" ]
+then
+    alias ls='ls -alhG'
+
+    alias ps='pstree -g 2'
+
+    # OS X has no `md5sum`, so use `md5` as a fallback
+    command -v md5sum > /dev/null || alias md5sum="md5"
+
+    # OS X has no `sha1sum`, so use `shasum` as a fallback
+    command -v sha1sum > /dev/null || alias sha1sum="shasum"
+
+else
+
+    alias ls='ls -alh --color=auto'
+
+    alias ps='ps aux --forest'
+fi
+
+# no vi please
+alias vi=vim
+
+alias cp='cp -v'
+alias rm='rm -v'
+
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+alias tree=fancytree
