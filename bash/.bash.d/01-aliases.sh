@@ -18,7 +18,7 @@ alias cp='/bin/cp -v'
 alias rm='/bin/rm -v'
 
 if [[ "$OS" = 'Darwin' ]]; then
-  alias ls='/bin/ls -alhG'
+  alias ls='/opt/local/bin/gls -alh --color-auto'
 else
   alias ls='/bin/ls -alh --color=auto'
 fi
@@ -40,19 +40,8 @@ alias egrep='egrep --color=auto'
 ########################################################################################################################
 
 if [[ "$OS" = 'Darwin' ]]; then
-  alias md5='/sbin/md5 -r'
-  alias md5sum='/sbin/md5 -r'
-fi
-
-
-########################################################################################################################
-## PS
-########################################################################################################################
-
-if [[ "$OS" = 'Darwin' ]]; then
-  alias ps='/opt/local/bin/pstree -g 3 -w'
-else
-  alias ps='/bin/ps aux --forest'
+  alias md5sum='/opt/local/bin/gmd5sum'
+  alias sha1sum='/opt/local/bin/gsha1sum'
 fi
 
 

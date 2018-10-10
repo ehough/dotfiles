@@ -28,7 +28,7 @@ hashdir() {
   fi
 
   if [[ "$OS" = 'Darwin' ]]; then
-    find "$1" -type f -exec md5 -r  {} + | cut -d ' ' -f 1 | sort | md5 -r | cut -d ' ' -f 1
+    find "$1" -type f -exec /opt/local/bin/gmd5sum  {} + | cut -d ' ' -f 1 | sort | /opt/local/bin/gmd5sum | cut -d ' ' -f 1
   else
     find "$1" -type f -exec md5sum {} + | cut -d ' ' -f 1 | sort | md5sum | cut -d ' ' -f 1
   fi
@@ -37,4 +37,17 @@ hashdir() {
 tree() {
 
   command tree -aC -I ".git|node_modules|bower_components" --dirsfirst "$1" | less -FRX
+}
+
+########################################################################################################################
+## PS
+########################################################################################################################
+
+ps() {
+
+  if [[ "$OS" = 'Darwin' ]]; then
+    /opt/local/bin/pstree -g 3 -w
+  else
+    /bin/ps aux --forest "$@"
+  fi
 }
