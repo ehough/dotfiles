@@ -27,7 +27,11 @@ hashdir() {
     exit 1
   fi
 
-  find "$1" -type f -exec md5sum {} + | cut -d ' ' -f 1 | sort | md5sum | cut -d ' ' -f 1
+  if [[ "$OS" = 'Darwin' ]]; then
+    find "$1" -type f -exec md5 -r  {} + | cut -d ' ' -f 1 | sort | md5 -r | cut -d ' ' -f 1
+  else
+    find "$1" -type f -exec md5sum {} + | cut -d ' ' -f 1 | sort | md5sum | cut -d ' ' -f 1
+  fi
 }
 
 tree() {
