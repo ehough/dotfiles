@@ -18,7 +18,7 @@ alias cp='/bin/cp -v'
 alias rm='/bin/rm -v'
 
 if [[ "$OS" = 'Darwin' ]]; then
-  alias ls='/opt/local/bin/gls -alh --color-auto'
+  alias ls='/opt/local/bin/gls -alh --color=auto'
 else
   alias ls='/bin/ls -alh --color=auto'
 fi
