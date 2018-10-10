@@ -19,5 +19,5 @@ __prompt_last_status_color() {
 
 }
 
-PROMPT_COMMAND='LAST_EXIT="$?";'
+PROMPT_COMMAND='LAST_EXIT=$?; if [ -n "$WIN_TITLE" ]; then echo -ne "\033]0;${WIN_TITLE}\007"; else echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"; fi;'
 PS1='$(__prompt_jobs)$(__prompt_last_status_color)\u@\h\[\033[0m\] \[\033[1;34m\]\w\[\033[0m\] > '
