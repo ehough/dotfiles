@@ -36,7 +36,7 @@ hashdir() {
 
 tree() {
 
-  command tree -aC -I ".git|node_modules|bower_components" --dirsfirst "$1" | less -FRX
+  command tree -aC -I ".git|node_modules|bower_components" --dirsfirst "$1" | less
 }
 
 ########################################################################################################################
