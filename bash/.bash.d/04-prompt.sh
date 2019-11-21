@@ -5,7 +5,7 @@ __prompt_jobs() {
   local -r job_count="$(jobs | wc -l | awk '{ print $1 }')"
 
   if [[ "$job_count" != '0' ]]; then
-    printf "\033[5m\033[93m($job_count)\033[0m " #blinking light yellow
+    printf "\033[5m\033[93m(%d)\033[0m " "$job_count" #blinking light yellow
   fi
 }
 
