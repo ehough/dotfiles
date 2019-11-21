@@ -17,7 +17,7 @@ alias .....='cd ../../../..'
 alias cp='/bin/cp -v'
 alias rm='/bin/rm -v'
 
-if [[ "$OS" = 'Darwin' ]]; then
+if [[ "$OSTYPE" = 'darwin'* && -x /opt/local/bin/gls ]]; then
   alias ls='/opt/local/bin/gls -alh --color=auto'
 else
   alias ls='/bin/ls -alh --color=auto'
@@ -39,7 +39,7 @@ alias egrep='egrep --color=auto'
 ## CRYPTO
 ########################################################################################################################
 
-if [[ "$OS" = 'Darwin' ]]; then
+if [[ "$OSTYPE" = 'darwin'* ]]; then
   alias md5sum='/opt/local/bin/gmd5sum'
   alias sha1sum='/opt/local/bin/gsha1sum'
 fi

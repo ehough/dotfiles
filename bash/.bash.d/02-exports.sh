@@ -40,7 +40,7 @@ export LS_COLORS='bd=38;5;68:ca=38;5;17:cd=38;5;113;1:di=38;5;30:do=38;5;127:ex=
 ## MAC-SPECIFIC
 ########################################################################################################################
 
-if [[ "$OS" = 'Darwin' ]]; then
+if [[ "$OSTYPE" = 'darwin'* ]]; then
     export PATH=/opt/local/bin:/opt/local/sbin:/opt/local/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
     export MANPATH=/opt/local/share/man:$MANPATH
 fi

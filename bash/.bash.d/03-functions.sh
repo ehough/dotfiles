@@ -27,7 +27,7 @@ hashdir() {
     exit 1
   fi
 
-  if [[ "$OS" = 'Darwin' ]]; then
+  if [[ "$OSTYPE" = 'darwin'* && -x /opt/local/bin/gmd5sum ]]; then
     find "$1" -type f -exec /opt/local/bin/gmd5sum  {} + | cut -d ' ' -f 1 | sort | /opt/local/bin/gmd5sum | cut -d ' ' -f 1
   else
     find "$1" -type f -exec md5sum {} + | cut -d ' ' -f 1 | sort | md5sum | cut -d ' ' -f 1
@@ -45,7 +45,7 @@ tree() {
 
 ps() {
 
-  if [[ "$OS" = 'Darwin' ]]; then
+  if [[ "$OSTYPE" = 'darwin'* && -x /opt/local/bin/pstree ]]; then
     /opt/local/bin/pstree -g 3 -w
   else
     /bin/ps aux --forest "$@"
