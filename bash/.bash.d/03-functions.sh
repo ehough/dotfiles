@@ -16,11 +16,6 @@ man() {
     man "$@"
 }
 
-myip() {
-
-  dig +short myip.opendns.com @resolver1.opendns.com
-}
-
 hashdir() {
 
   if [[ ! -d "$1" ]]; then
@@ -32,6 +27,11 @@ hashdir() {
   else
     find "$1" -type f -exec md5sum {} + | cut -d ' ' -f 1 | sort | md5sum | cut -d ' ' -f 1
   fi
+}
+
+howbig() {
+
+  du -h "$1" | tail -n 1 | cut -f 1
 }
 
 tree() {
