@@ -1,37 +1,50 @@
 [user]
-	name = Eric Hough
-	email = eric@tubepress.com
+    name  = Eric Hough
+    email = eric@tubepress.com
 
 [color]
 
-	# Use colors in Git commands that are capable of colored output when
-	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
-	ui = auto
+    # Use colors in Git commands that are capable of colored output when
+    # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+    ui = auto
 
 [color "branch"]
 
-	current = yellow reverse
-	local = yellow
-	remote = green
+    current = yellow reverse
+    local   = yellow
+    remote  = green
 
 [color "diff"]
 
-	meta = yellow bold
-	frag = magenta bold # line info
-	old = red # deletions
-	new = green # additions
+    meta = yellow bold
+    frag = magenta bold # line info
+    old  = red # deletions
+    new  = green # additions
 
 [color "status"]
 
-	added = yellow
-	changed = green
-	untracked = cyan
+    added     = yellow
+    changed   = green
+    untracked = cyan
 
 [core]
-        editor = /usr/bin/vim
+    editor = /usr/bin/vim
 
 [merge]
-        renamelimit = 5000
+    renamelimit = 5000
+
+# https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
+# https://haacked.com/archive/2014/07/28/github-flow-aliases/
 [alias]
 
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+    lg        = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+    unstage   = reset HEAD --
+    newbranch = checkout -b
+    pushall   = "!f() { git push --all ${1-origin} && git push --tags ${1-origin}; }; f"
+    release   = "!f() { git checkout master && git merge --no-ff --no-edit develop && git tag $1 && git checkout develop && git merge --no-ff --no-edit master; }; f"
+    s         = status
+    d         = diff
+
+[credential]
+    helper      = !aws codecommit credential-helper $@
+    UseHttpPath = true
