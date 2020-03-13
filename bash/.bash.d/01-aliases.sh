@@ -19,6 +19,8 @@ alias rm='/bin/rm -v'
 
 if [[ "$OSTYPE" = 'darwin'* && -x /opt/local/bin/gls ]]; then
   alias ls='/opt/local/bin/gls -alh --color=auto'
+elif hash exa 2> /dev/null; then
+  alias ls='exa --all --long --classify --group --time-style long-iso'
 else
   alias ls='/bin/ls -alh --color=auto'
 fi
