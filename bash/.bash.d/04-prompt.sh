@@ -77,7 +77,7 @@ __prompt() {
     done < <(${git_eng} status --porcelain --branch 2>/dev/null)  # note the space between the two <
 
     # print the git branch segment without a trailing newline
-    echo -n " (${ref}${marks})"
+    echo -n " [${ref}${marks}]"
   }
 
   __prompt_ps1() {
@@ -100,7 +100,7 @@ __prompt() {
       git="$(__prompt_git)"
     fi
 
-    PS1="${color_jobs}$(__prompt_jobs)${color_exit}\u@\h ${color_pwd}\w${color_git}${git}${color_reset} > "
+    PS1="${color_jobs}$(__prompt_jobs)${color_exit}\u@\h ${color_pwd}\w${color_reset}${color_git}${git}${color_reset} > "
   }
 
   PROMPT_COMMAND="__prompt_ps1"
