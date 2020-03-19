@@ -40,10 +40,32 @@
     lg        = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
     unstage   = reset HEAD --
     newbranch = checkout -b
-    pushall   = "!f() { git push --all ${1-origin} && git push --tags ${1-origin}; }; f"
-    release   = "!f() { git checkout master && git merge --no-ff --no-edit develop && git tag $1 && git checkout develop && git merge --no-ff --no-edit master; }; f"
     s         = status
     d         = diff
+    pushall   = "!f() {                                          \
+      remote_count=\"$(git remote | wc -l)\";                    \
+      if [ \"$remote_count\" != '1' ]; then                      \
+        echo 'please supply a remote name';                      \
+        exit 1;                                                  \
+      fi;                                                        \
+      remote=\"$(git remote)\";                                  \
+      git push --all \"$remote\" && git push --tags \"$remote\"; \
+    }; f"
+    release   = "!f() {                                                   \
+      if [[ \"$(git rev-parse --abbrev-ref HEAD)\" != 'develop' ]]; then  \
+        echo 'can only release starting from develop branch';             \
+        exit 1;                                                           \
+      fi;                                                                 \
+      if [[ -z \"$1\" ]]; then                                            \
+        echo 'please supply a tag name';                                  \
+        exit 1;                                                           \
+      fi;                                                                 \
+      git checkout master                                              && \
+      git merge --no-ff --no-edit develop                              && \
+      git tag \"$1\"                                                   && \
+      git checkout develop                                             && \
+      git merge --no-ff --no-edit master;                                 \
+    }; f"
 
 [credential]
     helper      = !aws codecommit credential-helper $@
