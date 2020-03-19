@@ -56,7 +56,7 @@ hashdir() {
 
 howbig() {
 
-  du -h "$1" | tail -n 1 | cut -f 1
+  du -h --summarize "$1" | cut -f 1
 }
 
 

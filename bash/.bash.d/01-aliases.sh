@@ -16,6 +16,7 @@ alias .....='cd ../../../..'
 
 alias cp='cp -v'
 alias rm='rm -v'
+alias du='du --apparent-size'
 
 # try to use the best ls we have available
 if is_executable exa; then
@@ -31,11 +32,7 @@ fi
 ## GREP
 ########################################################################################################################
 
-# Always enable colored `grep` output
-# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
 alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
 
 
 ########################################################################################################################
@@ -43,8 +40,8 @@ alias egrep='egrep --color=auto'
 ########################################################################################################################
 
 if is_macos; then
-  is_executable gmd5sum  && alias md5sum='gmd5sum'
-  is_executable gsha1sum && alias sha1sum='gsha1sum'
+  alias md5sum='gmd5sum'
+  alias sha1sum='gsha1sum'
 fi;
 
 
@@ -60,21 +57,15 @@ fi
 
 
 ########################################################################################################################
-## ANSIBLE
+## MISC. APPS
 ########################################################################################################################
 
 alias ans=ansible
 alias ansp=ansible-playbook
-
-
-########################################################################################################################
-## MISC. APPS
-########################################################################################################################
-
-alias vi='vim'
 alias bc='bc --mathlib'
 alias dmesg='dmesg --color=auto --reltime --human --nopager --decode'
-
+alias tf='terraform'
+alias vi='vim'
 
 ########################################################################################################################
 ## PBCOPY/PBPASTE
@@ -91,7 +82,6 @@ fi
 ########################################################################################################################
 
 if is_executable apt; then
-
   alias aptinstall='sudo apt-get install --no-install-recommends'
   alias aptshow='apt-cache show'
   alias aptpurge='sudo apt-get purge'
