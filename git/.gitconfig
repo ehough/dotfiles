@@ -42,14 +42,14 @@
     newbranch = checkout -b
     s         = status
     d         = diff
-    pushall   = "!f() {                                          \
-      remote_count=\"$(git remote | wc -l)\";                    \
-      if [ \"$remote_count\" != '1' ]; then                      \
-        echo 'please supply a remote name';                      \
-        exit 1;                                                  \
-      fi;                                                        \
-      remote=\"$(git remote)\";                                  \
-      git push --all \"$remote\" && git push --tags \"$remote\"; \
+    pushall   = "!f() {                                           \
+      remote_count=\"$(git remote | wc -l | tr -d '[:space:]')\"; \
+      if [ \"$remote_count\" != '1' ]; then                       \
+        echo 'please supply a remote name';                       \
+        exit 1;                                                   \
+      fi;                                                         \
+      remote=\"$(git remote)\";                                   \
+      git push --all \"$remote\" && git push --tags \"$remote\";  \
     }; f"
     release   = "!f() {                                                   \
       if [[ \"$(git rev-parse --abbrev-ref HEAD)\" != 'develop' ]]; then  \

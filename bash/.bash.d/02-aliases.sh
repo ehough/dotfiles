@@ -16,7 +16,15 @@ alias .....='cd ../../../..'
 
 alias cp='cp -v'
 alias rm='rm -v'
-alias du='du --apparent-size'
+alias tree='dirtree'
+alias hashdir='dirhash'
+alias howbig='dirsize'
+
+if is_macos && is_executable gdu; then
+  alias du='gdu --apparent-size'
+elif ! is_macos; then
+  alias du='du --apparent-size'
+fi
 
 # try to use the best ls we have available
 if is_executable exa; then
@@ -39,21 +47,24 @@ alias grep='grep --color=auto'
 ## CRYPTO
 ########################################################################################################################
 
-if is_macos; then
+# don't bother checking if they're executable, because Darwin doesn't have these anyway
+is_macos && {
   alias md5sum='gmd5sum'
   alias sha1sum='gsha1sum'
-fi;
+  alias sha256sum='gsha256sum'
+  alias sha512sum='gsha512sum'
+}
 
 
 ########################################################################################################################
 ## BAT
 ########################################################################################################################
 
-if is_executable bat; then
+is_executable bat && {
   alias less='bat'
   alias cat='bat'
   alias more='bat'
-fi
+}
 
 
 ########################################################################################################################
@@ -63,17 +74,22 @@ fi
 alias ans=ansible
 alias ansp=ansible-playbook
 alias bc='bc --mathlib'
-alias dmesg='dmesg --color=auto --reltime --human --nopager --decode'
 alias tf='terraform'
 alias vi='vim'
+
+! is_macos && alias dmesg='dmesg --color=auto --reltime --human --nopager --decode'
+
 
 ########################################################################################################################
 ## PBCOPY/PBPASTE
 ########################################################################################################################
 
-if ! is_macos && is_executable xclip; then
-  alias pbcopy='xclip -selection clipboard'
-  alias pbpaste='xclip -selection clipboard -o'
+if is_macos; then
+  alias copy='pbcopy'
+  alias paste='pbpaste'
+elif is_executable xclip; then
+  alias copy='xclip -selection clipboard'
+  alias paste='xclip -selection clipboard -o'
 fi
 
 
@@ -81,10 +97,23 @@ fi
 ## APT
 ########################################################################################################################
 
-if is_executable apt; then
-  alias aptinstall='sudo apt-get install --no-install-recommends'
-  alias aptshow='apt-cache show'
-  alias aptpurge='sudo apt-get purge'
-  alias aptupdate='sudo apt-get update'
-  alias aptupgrade='aptupdate && sudo apt-get dist-upgrade'
+is_executable apt-get && {
+  alias apt-install='sudo apt-get install --no-install-recommends'
+  alias apt-show='apt-cache show'
+  alias apt-purge='sudo apt-get purge'
+  alias apt-update='sudo apt-get update'
+  alias apt-upgrade='apt-update && sudo apt-get dist-upgrade'
+}
+
+
+########################################################################################################################
+## PS
+########################################################################################################################
+
+if is_executable pstree; then
+  alias ps='pstree -g 3 -w'
+elif ! is_macos; then
+  alias ps='ps aux --forest'
+else
+  alias ps='ps aux'
 fi

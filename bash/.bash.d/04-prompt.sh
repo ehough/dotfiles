@@ -2,7 +2,7 @@
 
 __prompt() {
 
-  __prompt_jobs() {
+  __prompt_show_jobs() {
 
     local -r job_count="$(jobs | wc -l | tr -d '[:space:]')"
 
@@ -36,7 +36,7 @@ __prompt() {
     echo "($message) "
   }
 
-  __prompt_git() {
+  __prompt_show_git() {
 
     # ideas stolen from: https://github.com/riobard/bash-powerline/blob/master/bash-powerline.sh
 
@@ -80,7 +80,7 @@ __prompt() {
     echo -n " [${ref}${marks}]"
   }
 
-  __prompt_ps1() {
+  __prompt_set_ps1() {
 
     local -r last_exit=$?
     local -r color_reset='\e[m'
@@ -89,21 +89,22 @@ __prompt() {
     local -r color_pwd='\e[1;34m'     # bold blue
     local -r color_git='\e[90m'       # dark gray
     local -r color_jobs='\e[93m'      # yellow
-    local color_exit git
+    local git color_exit
 
     [[ ${last_exit} -eq 0 ]] && color_exit="$color_success" || color_exit="$color_failure"
 
+    # https://github.com/git/git/blob/9d77b0405ce6b471cb5ce3a904368fc25e55643d/contrib/completion/git-prompt.sh#L324
     if shopt -q promptvars; then
-      __prompt_git_info="$(__prompt_git)"
-      git="\${__prompt_git_info}"
+      __prompt_git="$(__prompt_show_git)"
+      git="\${__prompt_git}"
     else
-      git="$(__prompt_git)"
+      git="$(__prompt_show_git)"
     fi
 
-    PS1="${color_jobs}$(__prompt_jobs)${color_exit}\u@\h ${color_pwd}\w${color_reset}${color_git}${git}${color_reset} > "
+    PS1="${color_jobs}$(__prompt_show_jobs)${color_exit}\u@\h ${color_pwd}\w${color_reset}${color_git}${git}${color_reset} > "
   }
 
-  PROMPT_COMMAND="__prompt_ps1"
+  PROMPT_COMMAND='__prompt_set_ps1'
 }
 
 __prompt
