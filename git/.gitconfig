@@ -52,11 +52,11 @@
       git push --all \"$remote\" && git push --tags \"$remote\";  \
     }; f"
     release   = "!f() {                                                   \
-      if [[ \"$(git rev-parse --abbrev-ref HEAD)\" != 'develop' ]]; then  \
+      if [ \"$(git rev-parse --abbrev-ref HEAD)\" != 'develop' ]; then    \
         echo 'can only release starting from develop branch';             \
         exit 1;                                                           \
       fi;                                                                 \
-      if [[ -z \"$1\" ]]; then                                            \
+      if [ -z \"$1\" ]; then                                              \
         echo 'please supply a tag name';                                  \
         exit 1;                                                           \
       fi;                                                                 \
