@@ -107,13 +107,15 @@ is_executable apt-get && {
 
 
 ########################################################################################################################
-## PS
+## PS/PSTREE
 ########################################################################################################################
 
-if is_executable pstree; then
-  alias ps='pstree -g 3 -w'
-elif ! is_macos; then
-  alias ps='ps aux --forest'
-else
-  alias ps='ps aux'
+alias ps='ps -ww  -A -o pid=PID,ruser=USER,nice=NICE,state=STATE,time=TIME,tt=TTY,args=CMD'
+
+if ! is_macos; then
+  alias pstree='ps --forest'
+elif is_executable pstree; then
+  # -g n  -  Use graphics chars for tree.  n = 1: IBM-850, n = 2: VT100, n = 3: UTF8.
+  # -w    -  Wide output, not truncated to terminal width.
+  alias ps='pstree -g 2 -w'
 fi
