@@ -72,10 +72,12 @@ is_executable bat && {
 ########################################################################################################################
 
 alias ans=ansible
-alias ansp=ansible-playbook
+alias ansp='ansible-playbook --diff'
 alias bc='bc --mathlib'
 alias tf='terraform'
 alias vi='vim'
+alias dc='docker-compose'
+alias d='docker'
 
 ! is_macos && alias dmesg='dmesg --color=auto --reltime --human --nopager --decode'
 
@@ -110,12 +112,19 @@ is_executable apt-get && {
 ## PS/PSTREE
 ########################################################################################################################
 
-alias ps='ps -ww  -A -o pid=PID,ruser=USER,nice=NICE,state=STATE,time=TIME,tt=TTY,args=CMD'
+alias ps='ps --forest -ww  -A -o pid=PID,ruser=USER,nice=NICE,state=STATE,time=TIME,tt=TTY,args=CMD'
 
 if ! is_macos; then
   alias pstree='ps --forest'
 elif is_executable pstree; then
   # -g n  -  Use graphics chars for tree.  n = 1: IBM-850, n = 2: VT100, n = 3: UTF8.
   # -w    -  Wide output, not truncated to terminal width.
-  alias ps='pstree -g 2 -w'
+  alias pstree='pstree -g 2 -w'
 fi
+
+
+########################################################################################################################
+## SYSTEMD
+########################################################################################################################
+
+! is_macos && alias sys='sudo systemctl'
