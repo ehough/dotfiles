@@ -71,13 +71,9 @@ is_executable bat && {
 ## MISC. APPS
 ########################################################################################################################
 
-alias ans=ansible
-alias ansp='ansible-playbook --diff'
 alias bc='bc --mathlib'
 alias tf='terraform'
 alias vi='vim'
-alias dc='docker-compose'
-alias d='docker'
 
 ! is_macos && alias dmesg='dmesg --color=auto --reltime --human --nopager --decode'
 
@@ -134,4 +130,25 @@ if ! is_macos; then
 
    # no real reason to ever run systemd directly, so assume this is a d'oh moment and revert to sc
   alias systemd='sc'
+fi
+
+
+########################################################################################################################
+## ANSIBLE
+########################################################################################################################
+
+alias ans=ansible
+alias ansp='ansible-playbook --diff'
+alias ansg='ansible-galaxy'
+alias ansl='ansible-lint -x 701,401'
+alias ansv='ansible-vault'
+
+
+########################################################################################################################
+## DOCKER
+########################################################################################################################
+
+if ! is_macos; then
+  alias dc='docker-compose'
+  alias d='docker'
 fi
