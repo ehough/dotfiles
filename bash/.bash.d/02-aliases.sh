@@ -127,4 +127,11 @@ fi
 ## SYSTEMD
 ########################################################################################################################
 
-! is_macos && alias sys='sudo systemctl'
+if ! is_macos; then
+  alias sc='sudo systemctl'
+  alias scu='systemctl --user'
+  alias j='sudo journalctl'
+
+   # no real reason to ever run systemd directly, so assume this is a d'oh moment and revert to sc
+  alias systemd='sc'
+fi
