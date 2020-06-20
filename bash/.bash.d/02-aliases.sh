@@ -1,94 +1,14 @@
 #!/usr/bin/env bash
 
 ########################################################################################################################
-## CD
+## ANSIBLE
 ########################################################################################################################
 
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-
-
-########################################################################################################################
-## FILE & DIRECTORY HANDLING
-########################################################################################################################
-
-alias cp='cp -v'
-alias rm='rm -v'
-alias tree='dirtree'
-alias hashdir='dirhash'
-alias howbig='dirsize'
-
-if is_macos && is_executable gdu; then
-  alias du='gdu --apparent-size'
-elif ! is_macos; then
-  alias du='du --apparent-size'
-fi
-
-# try to use the best ls we have available
-if is_executable exa; then
-  alias ls='exa --all --long --classify --group --time-style long-iso'
-elif is_macos && is_executable gls; then
-  alias ls='gls -alh --color=auto'
-else
-  alias ls='ls -alh --color=auto'
-fi
-
-
-########################################################################################################################
-## GREP
-########################################################################################################################
-
-alias grep='grep --color=auto'
-
-
-########################################################################################################################
-## CRYPTO
-########################################################################################################################
-
-# don't bother checking if they're executable, because Darwin doesn't have these anyway
-is_macos && {
-  alias md5sum='gmd5sum'
-  alias sha1sum='gsha1sum'
-  alias sha256sum='gsha256sum'
-  alias sha512sum='gsha512sum'
-}
-
-
-########################################################################################################################
-## BAT
-########################################################################################################################
-
-is_executable bat && {
-  alias less='bat'
-  alias cat='bat'
-  alias more='bat'
-}
-
-
-########################################################################################################################
-## MISC. APPS
-########################################################################################################################
-
-alias bc='bc --mathlib'
-alias tf='terraform'
-alias vi='vim'
-
-! is_macos && alias dmesg='dmesg --color=auto --reltime --human --nopager --decode'
-
-
-########################################################################################################################
-## PBCOPY/PBPASTE
-########################################################################################################################
-
-if is_macos; then
-  alias copy='pbcopy'
-  alias paste='pbpaste'
-elif is_executable xclip; then
-  alias copy='xclip -selection clipboard'
-  alias paste='xclip -selection clipboard -o'
-fi
+alias ans=ansible
+alias ansp='ansible-playbook --diff'
+alias ansg='ansible-galaxy'
+alias ansl='ansible-lint -x 701,401'
+alias ansv='ansible-vault'
 
 
 ########################################################################################################################
@@ -105,17 +25,131 @@ is_executable apt-get && {
 
 
 ########################################################################################################################
+## BAT
+########################################################################################################################
+
+is_executable bat && {
+  alias less='bat'
+  alias cat='bat'
+  alias more='bat'
+}
+
+
+########################################################################################################################
+## BC
+########################################################################################################################
+
+alias bc='bc --mathlib'
+
+
+########################################################################################################################
+## COPY & PASTE
+########################################################################################################################
+
+if is_macos; then
+  alias copy='pbcopy'
+  alias paste='pbpaste'
+elif is_executable xclip; then
+  alias copy='xclip -selection clipboard'
+  alias paste='xclip -selection clipboard -o'
+fi
+
+
+########################################################################################################################
+## CORE UTILS
+########################################################################################################################
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+alias cp='cp -v'
+alias rm='rm -v'
+
+# try to use the best ls we have available
+if is_executable exa; then
+  alias ls='exa --all --long --classify --group --time-style long-iso'
+elif is_macos && is_executable gls; then
+  alias ls='gls -alh --color=auto'
+else
+  alias ls='ls -alh --color=auto'
+fi
+
+# don't bother checking if they're executable, because Darwin doesn't have these anyway
+if is_macos; then
+  alias md5sum='gmd5sum'
+  alias sha1sum='gsha1sum'
+  alias sha256sum='gsha256sum'
+  alias sha512sum='gsha512sum'
+  alias realpath='grealpath'
+
+  # if gcat is executable, assume we have coreutils installed from macports
+  is_executable gcat && {
+    alias du='gdu --human-readable --apparent-size'
+    alias du1='du --max-depth=1'
+  }
+
+else
+  alias du='du --apparent-size'
+fi
+
+
+########################################################################################################################
+## CUSTOM FUNCTIONS (SEE 03-FUNCTIONS.SH)
+########################################################################################################################
+
+alias hashdir='dirhash'
+alias howbig='dirsize'
+
+
+########################################################################################################################
+## DMESG
+########################################################################################################################
+
+! is_macos && alias dmesg='dmesg --color=auto --reltime --human --nopager --decode'
+
+
+########################################################################################################################
+## DOCKER
+########################################################################################################################
+
+is_executable docker         && alias d='docker'
+is_executable docker-compose && alias dc='docker-compose'
+
+
+########################################################################################################################
+## GREP
+########################################################################################################################
+
+alias grep='grep --color=auto'
+
+
+########################################################################################################################
 ## PS/PSTREE
 ########################################################################################################################
 
-alias ps='ps --forest -ww  -A -o pid=PID,ruser=USER,nice=NICE,state=STATE,time=TIME,tt=TTY,args=CMD'
+alias ps='ps -A -o pid=PID,ppid=PARENT,ruser=USER,nice=NICE,state=STATE,time=TIME,tt=TTY,args=CMD -ww'
 
-if ! is_macos; then
+if is_macos; then
+  if is_executable pstree; then
+    # -g n  -  Use graphics chars for tree.  n = 1: IBM-850, n = 2: VT100, n = 3: UTF8.
+    # -w    -  Wide output, not truncated to terminal width.
+    alias pstree='pstree -g 2 -w'
+  fi
+else
   alias pstree='ps --forest'
-elif is_executable pstree; then
-  # -g n  -  Use graphics chars for tree.  n = 1: IBM-850, n = 2: VT100, n = 3: UTF8.
-  # -w    -  Wide output, not truncated to terminal width.
-  alias pstree='pstree -g 2 -w'
+fi
+
+
+########################################################################################################################
+## SED
+########################################################################################################################
+
+if is_macos && is_executable gsed; then
+  alias sed='gsed -E'
+else
+  alias sed='sed -E'
 fi
 
 
@@ -134,21 +168,22 @@ fi
 
 
 ########################################################################################################################
-## ANSIBLE
+## TERRAFORM
 ########################################################################################################################
 
-alias ans=ansible
-alias ansp='ansible-playbook --diff'
-alias ansg='ansible-galaxy'
-alias ansl='ansible-lint -x 701,401'
-alias ansv='ansible-vault'
+alias tf='terraform'
 
 
 ########################################################################################################################
-## DOCKER
+## TREE
 ########################################################################################################################
 
-if ! is_macos; then
-  alias dc='docker-compose'
-  alias d='docker'
-fi
+alias tree='dirtree'
+
+
+########################################################################################################################
+## VI(M)
+########################################################################################################################
+
+alias vi='vim'
+
