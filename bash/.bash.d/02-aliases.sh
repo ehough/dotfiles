@@ -4,7 +4,7 @@
 ## ANSIBLE
 ########################################################################################################################
 
-alias ans=ansible
+alias ans='ansible'
 alias ansp='ansible-playbook --diff'
 alias ansg='ansible-galaxy'
 alias ansl='ansible-lint -x 701,401'
@@ -84,16 +84,12 @@ if is_macos; then
   alias sha512sum='gsha512sum'
   alias realpath='grealpath'
 
-  # if gcat is executable, assume we have coreutils installed from macports
-  is_executable gcat && {
-    alias du='gdu --human-readable --apparent-size'
-    alias du1='du --max-depth=1'
-  }
+  is_executable gdu && alias du='gdu --human-readable --apparent-size'
 
 else
-  alias du='du --apparent-size'
+  alias du='du --human-readable --apparent-size'
 fi
-
+alias du1='du -d 1'
 
 ########################################################################################################################
 ## CUSTOM FUNCTIONS (SEE 03-FUNCTIONS.SH)
@@ -186,4 +182,3 @@ alias tree='dirtree'
 ########################################################################################################################
 
 alias vi='vim'
-
