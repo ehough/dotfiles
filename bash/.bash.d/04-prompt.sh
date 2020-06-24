@@ -83,7 +83,7 @@ __prompt() {
   __prompt_set_ps1() {
 
     local -r last_exit=$?
-    local -r color_reset='\e[m'
+    local -r color_reset='\e[0m'
     local -r color_success='\e[1;32m' # bold green
     local -r color_failure='\e[1;91m' # bold red
     local -r color_pwd='\e[1;34m'     # bold blue

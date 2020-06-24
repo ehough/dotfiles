@@ -1,39 +1,13 @@
 #!/usr/bin/env bash
 
 ########################################################################################################################
-## man - colorize output
+## apt-search - searches apt, sorts it, and pipes it to less
 ########################################################################################################################
 
-man() {
-
-  env                                         \
-    LESS_TERMCAP_mb="$(printf "\e[1;31m")"    \
-    LESS_TERMCAP_md="$(printf "\e[1;31m")"    \
-    LESS_TERMCAP_me="$(printf "\e[0m")"       \
-    LESS_TERMCAP_se="$(printf "\e[0m")"       \
-    LESS_TERMCAP_so="$(printf "\e[1;44;33m")" \
-    LESS_TERMCAP_ue="$(printf "\e[0m")"       \
-    LESS_TERMCAP_us="$(printf "\e[1;32m")"    \
-    man "$@"
-}
-
-
-########################################################################################################################
-## myip - finds public IP
-########################################################################################################################
-
-myip() {
-
-  local -r list=('https://myip.dnsomatic.com/' 'https://checkip.dyndns.com/' 'https://checkip.dyndns.org/')
-  local result url
-
-  for url in ${list[*]}; do
-
-    if result=$(curl --max-time 1 -s "${url}"); then
-      echo "$result"
-      break
-    fi
-  done
+is_executable apt-cache && {
+  apt-search() {
+    apt-cache search "$1" | sort | less
+  }
 }
 
 
@@ -79,11 +53,55 @@ dirtree() {
 
 
 ########################################################################################################################
-## apt-search - searches apt, sorts it, and pipes it to less
+## docker
 ########################################################################################################################
 
-is_executable apt-cache && {
-  apt-search() {
-    apt-cache search "$1" | sort | less
+is_executable docker && {
+
+  docker() {
+
+    if [[ "$1" == 'ps' ]]; then
+      command docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.RunningFor}}\t{{.Image}}\t{{.Networks}}\t{{.Ports}}'
+    else
+      command docker "$@"
+    fi
   }
 }
+
+
+########################################################################################################################
+## man - colorize output
+########################################################################################################################
+
+man() {
+
+  env                                         \
+    LESS_TERMCAP_mb="$(printf "\e[1;31m")"    \
+    LESS_TERMCAP_md="$(printf "\e[1;31m")"    \
+    LESS_TERMCAP_me="$(printf "\e[0m")"       \
+    LESS_TERMCAP_se="$(printf "\e[0m")"       \
+    LESS_TERMCAP_so="$(printf "\e[1;44;33m")" \
+    LESS_TERMCAP_ue="$(printf "\e[0m")"       \
+    LESS_TERMCAP_us="$(printf "\e[1;32m")"    \
+    man "$@"
+}
+
+
+########################################################################################################################
+## myip - finds public IP
+########################################################################################################################
+
+myip() {
+
+  local -r list=('https://myip.dnsomatic.com/' 'https://checkip.dyndns.com/' 'https://checkip.dyndns.org/')
+  local result url
+
+  for url in ${list[*]}; do
+
+    if result=$(curl --max-time 1 -s "${url}"); then
+      echo "$result"
+      break
+    fi
+  done
+}
+
