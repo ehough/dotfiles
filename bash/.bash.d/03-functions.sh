@@ -61,7 +61,7 @@ is_executable docker && {
   docker() {
 
     if [[ "$1" == 'ps' ]]; then
-      command docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.RunningFor}}\t{{.Image}}\t{{.Networks}}\t{{.Ports}}'
+      command docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.RunningFor}}\t{{.Image}}\t{{.Networks}}\t{{.Command}}'
     else
       command docker "$@"
     fi
