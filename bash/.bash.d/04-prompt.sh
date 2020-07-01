@@ -83,12 +83,12 @@ __prompt() {
   __prompt_set_ps1() {
 
     local -r last_exit=$?
-    local -r color_reset='\e[0m'
-    local -r color_success='\e[1;32m' # bold green
-    local -r color_failure='\e[1;91m' # bold red
-    local -r color_pwd='\e[1;34m'     # bold blue
-    local -r color_git='\e[90m'       # dark gray
-    local -r color_jobs='\e[93m'      # yellow
+    local -r color_reset='\[\033[0m\]'
+    local -r color_success='\[\033[1;32m\]' # bold green
+    local -r color_failure='\[\033[1;91m\]' # bold red
+    local -r color_pwd='\[\033[1;34m\]'     # bold blue
+    local -r color_git='\[\033[90m\]'       # dark gray
+    local -r color_jobs='\[\033[93m\]'      # yellow
     local git color_exit
 
     [[ ${last_exit} -eq 0 ]] && color_exit="$color_success" || color_exit="$color_failure"
