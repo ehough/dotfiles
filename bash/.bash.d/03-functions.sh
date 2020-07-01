@@ -24,7 +24,8 @@ dirhash() {
   local file_path
 
   # don't use -exec here so that we can rely on md5sum being aliased
-  find "$1" -type f | while read -r file_path; do
+  # https://stackoverflow.com/a/9612232
+  find "$1" -type f -print0 | while IFS= read -r -d '' file_path; do
     md5sum "$file_path"
   done | cut -d ' ' -f 1 | sort | md5sum | cut -d ' ' -f 1
 }
